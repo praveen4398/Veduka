@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/splash_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#381656">
+
+    <!-- V Logo -->
+    <ImageView
+        android:id="@+id/v_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@drawable/v_logo"
+        android:scaleType="centerInside" />
+
+    <!-- VEDUKA Text -->
+    <TextView
+        android:id="@+id/logo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="48sp"
+        android:textColor="#F7EEDC"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="180dp"
+        android:gravity="center"
+        android:fontFamily="sans-serif-medium" />
+</FrameLayout>
+

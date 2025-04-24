@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VedukaMAD</string>
+    <string name="veduka_title">VEDUKA</string>
+    <string name="veduka_subtitle">Plan. Book. Celebrate. Join us today!</string>
+    <string name="get_started">Get Started</string>
+    <string name="wedding_image_desc">Wedding couple image</string>
+    <string name="sign_in"><u>Sign In</u></string>
+    <string name="centre_stage">Sign In and Take Centre Stage..</string>
+    <string name="sign_up"><u>Sign Up</u></string>
+    <string name="centre_stage2">Sign Up.Plan.Celebrate..!</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Login</string>
+    <string name="or">OR</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="continue_phone">Continue with Mobile Number</string>
+    <string name="continue_google2">Sign Up with Google</string>
+    <string name="continue_phone2">Sign Up with Mobile Number</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="signup">Signup</string>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "333879668898",
+    "project_id": "veduka-b6a06",
+    "storage_bucket": "veduka-b6a06.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333879668898:android:35a7915bd268b76edde7fb",
+        "android_client_info": {
+          "package_name": "com.example.vedukamad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333879668898-j77h6rja5ggbmjjna28qriubjesfh491.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2FvhhfyOgcah4i_qw5IlmtyN17IJscds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333879668898-j77h6rja5ggbmjjna28qriubjesfh491.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

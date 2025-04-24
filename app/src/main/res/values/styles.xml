@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="roundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50dp</item>
+    </style>
+    <style name="CircleImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="NavDrawerItemText" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">18sp</item> <!-- Increase text size -->
+        <item name="android:textColor">#000000</item> <!-- Optional: control text color -->
+    </style>
+</resources>
