@@ -48,5 +48,17 @@
             android:textSize="14sp"
             android:textColor="#FFA000"
             android:layout_marginTop="4dp" />
+
+        <!-- Added Book Now Button -->
+        <Button
+            android:id="@+id/bookNowButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/roundable_button"
+            android:text="Book Now"
+            android:textColor="#FFFFFF"
+            android:padding="8dp"
+            android:textAllCaps="false" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

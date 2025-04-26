@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ✅ Required for Firebase & Google Sign-In -->
+    <!-- Required Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/v_logo"
         android:label="Veduka"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
+
         <activity android:name=".MainActivity" />
         <activity android:name=".IntroActivity" />
         <activity android:name=".UserRoleActivity" />
@@ -22,10 +24,9 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".EventDetailActivity" />
-
-
-
-        <!-- ✅ Required for Google Sign-In -->
+        <activity android:name=".BookingActivity"
+            android:exported="false" />
+        <!-- Google Sign-In Activity -->
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:excludeFromRecents="true"
             android:exported="false" />
@@ -39,8 +40,9 @@
         </activity>
 
     </application>
-<meta-data
-    android:name="com.google.android.geo.API_KEY"
-    android:value="AIzaSyAdoLY3S0yROcucRmhxOh7DCYo25JT-fJw"/>
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyAdoLY3S0yROcucRmhxOh7DCYo25JT-fJw"/>
 
 </manifest>

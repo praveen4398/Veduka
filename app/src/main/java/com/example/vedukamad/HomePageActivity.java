@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -38,10 +39,14 @@ public class HomePageActivity extends AppCompatActivity {
 
         // Handle the hamburger button click to open/close the drawer
         hamburgerButton.setOnClickListener(v -> {
-            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.openDrawer(GravityCompat.START);
+            if (drawerLayout != null) {
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
             } else {
-                drawerLayout.closeDrawer(GravityCompat.START);
+                Toast.makeText(HomePageActivity.this, "Drawer layout not found", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -83,13 +88,22 @@ public class HomePageActivity extends AppCompatActivity {
 
         // Setup RecyclerView for events
         recyclerView = findViewById(R.id.eventRecyclerView);
+
+        // Set fixed size to false to allow proper scrolling behavior
+        recyclerView.setHasFixedSize(false);
+
+        // Use GridLayoutManager with 2 columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        // Create events list
         ArrayList<Event> eventsList = new ArrayList<>();
         eventsList.add(new Event("Marriage", "android.resource://com.example.vedukamad/drawable/image1"));
         eventsList.add(new Event("Birthday", "android.resource://com.example.vedukamad/drawable/image2"));
         eventsList.add(new Event("Exhibition", "android.resource://com.example.vedukamad/drawable/image3"));
         eventsList.add(new Event("Entertainment", "android.resource://com.example.vedukamad/drawable/image4"));
+        // You can add more events in the future
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         eventAdapter = new EventAdapter(this, eventsList);
         recyclerView.setAdapter(eventAdapter);
 
@@ -99,15 +113,23 @@ public class HomePageActivity extends AppCompatActivity {
 
             if (id == R.id.nav_logout) {
                 showLogoutDialog(); // Show logout confirmation dialog
-                drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
 
             // Handle other navigation items if needed
-
             drawerLayout.closeDrawer(GravityCompat.START);
-            return false;
+            return true;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Close drawer if open when back button is pressed
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void showLogoutDialog() {
@@ -130,6 +152,7 @@ public class HomePageActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("No", (dialog, which) -> {
                     dialog.dismiss(); // Simply close the dialog and stay on the same screen
+                    drawerLayout.closeDrawer(GravityCompat.START); // Close drawer after dismissing dialog
                 })
                 .show();
     }
