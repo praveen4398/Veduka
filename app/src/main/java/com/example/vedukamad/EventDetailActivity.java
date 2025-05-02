@@ -135,6 +135,13 @@ public class EventDetailActivity extends AppCompatActivity {
         // Handle navigation item selection
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
+            if (id == R.id.nav_bookings) {
+                // Start the bookings activity
+                Intent intent = new Intent(this, YourBookingsActivity.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
 
             // Handle logout action
             if (id == R.id.nav_logout) {

@@ -1,25 +1,28 @@
 package com.example.vedukamad;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class BookingActivity extends AppCompatActivity {
+    private static final String TAG = "BookingActivity";
+
     // Price constants
     private int basicPackagePrice;
     private int premiumPackagePrice;
@@ -34,6 +37,7 @@ public class BookingActivity extends AppCompatActivity {
     private CheckBox cbMusic;
     private CheckBox cbShows;
     private CheckBox cbCatering;
+    private DatePicker datePicker;
 
     // User detail fields
     private TextInputEditText editName;
@@ -42,16 +46,22 @@ public class BookingActivity extends AppCompatActivity {
     private TextInputEditText editAddress;
     private TimePicker timePicker;
 
+    // Planner details
+    private String plannerName;
+    private String plannerLocation;
+    private float plannerRating;
+    private int plannerImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
         // Get data from intent
-        String plannerName = getIntent().getStringExtra("planner_name");
-        String plannerLocation = getIntent().getStringExtra("planner_location");
-        float plannerRating = getIntent().getFloatExtra("planner_rating", 0.0f);
-        int plannerImage = getIntent().getIntExtra("planner_image", R.drawable.ic_launcher_background);
+        plannerName = getIntent().getStringExtra("planner_name");
+        plannerLocation = getIntent().getStringExtra("planner_location");
+        plannerRating = getIntent().getFloatExtra("planner_rating", 0.0f);
+        plannerImage = getIntent().getIntExtra("planner_image", R.drawable.ic_launcher_background);
 
         // Get planner-specific pricing (default values if not provided)
         basicPackagePrice = getIntent().getIntExtra("basic_package_price", 60000);
@@ -66,6 +76,7 @@ public class BookingActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.edit_email);
         editAddress = findViewById(R.id.edit_address);
         timePicker = findViewById(R.id.time_picker);
+        datePicker = findViewById(R.id.date_picker);
 
         // Set data to views
         TextView tvPlannerName = findViewById(R.id.booking_planner_name);
@@ -97,7 +108,6 @@ public class BookingActivity extends AppCompatActivity {
         cbCatering.setText("Catering - Custom menu and service (₹" + formatPrice(cateringAddonPrice) + ")");
 
         // Style DatePicker
-        DatePicker datePicker = findViewById(R.id.date_picker);
         datePicker.setBackgroundColor(getResources().getColor(android.R.color.white));
 
         // Style TimePicker
@@ -122,15 +132,96 @@ public class BookingActivity extends AppCompatActivity {
         btnConfirmBooking.setOnClickListener(v -> {
             // Validate input fields
             if (validateInputs()) {
-                // Show confirmation message
-                Toast.makeText(this, "Booking confirmed with " + plannerName, Toast.LENGTH_LONG).show();
+                // Save the booking to BookingManager
+                saveBooking();
 
-                // Here you would typically save the booking to a database
+                // Show confirmation message
+                Intent intent = new Intent(BookingActivity.this, BookingConfirmedActivity.class);
+                startActivity(intent);
 
                 // Close the activity after a short delay
-                new android.os.Handler().postDelayed(this::finish, 1500);
+                new android.os.Handler().postDelayed(() -> {
+                    // Navigate to YourBookingsActivity to see the booking
+                    Intent bookingsIntent = new Intent(BookingActivity.this, YourBookingsActivity.class);
+                    startActivity(bookingsIntent);
+                    finish();
+                }, 1500);
             }
         });
+    }
+
+    private void saveBooking() {
+        // Get selected package type
+        String packageType = packageRadioGroup.getCheckedRadioButtonId() == R.id.radio_premium_package
+                ? "Premium Package" : "Basic Package";
+
+        // Calculate total price
+        int totalPrice = calculateTotalPrice();
+
+        // Format date from DatePicker
+        String eventDate = formatEventDate();
+
+        // Create a new Booking object
+        Booking newBooking = new Booking(
+                plannerName,
+                plannerLocation,
+                plannerRating,
+                plannerImage,
+                packageType,
+                totalPrice,
+                eventDate
+        );
+
+        // Get BookingManager instance and save the booking
+        BookingManager bookingManager = BookingManager.getInstance(this);
+        bookingManager.saveBooking(newBooking);
+
+        Log.d(TAG, "Booking saved: " + plannerName + " - " + eventDate + " - ₹" + totalPrice);
+    }
+
+    private String formatEventDate() {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth() + 1; // Month is 0-based
+        int year = datePicker.getYear();
+
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+
+        // Format: "15 May 2025 at 14:30"
+        String[] monthNames = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+        String formattedTime = String.format(Locale.getDefault(),
+                "%02d:%02d", hour, minute);
+
+        return String.format(Locale.getDefault(),
+                "%d %s %d at %s", day, monthNames[month-1], year, formattedTime);
+    }
+
+    private int calculateTotalPrice() {
+        int basePrice;
+        int addonsPrice = 0;
+
+        // Calculate base price based on selected package
+        if (packageRadioGroup.getCheckedRadioButtonId() == R.id.radio_premium_package) {
+            basePrice = premiumPackagePrice;
+        } else {
+            basePrice = basicPackagePrice;
+        }
+
+        // Calculate add-ons price
+        if (cbMusic.isChecked()) {
+            addonsPrice += musicAddonPrice;
+        }
+        if (cbShows.isChecked()) {
+            addonsPrice += showsAddonPrice;
+        }
+        if (cbCatering.isChecked()) {
+            addonsPrice += cateringAddonPrice;
+        }
+
+        // Return total
+        return basePrice + addonsPrice;
     }
 
     private boolean validateInputs() {
@@ -177,6 +268,7 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     private void updatePriceSummary() {
+        int totalPrice = calculateTotalPrice();
         int basePrice;
         int addonsPrice = 0;
 
@@ -197,9 +289,6 @@ public class BookingActivity extends AppCompatActivity {
         if (cbCatering.isChecked()) {
             addonsPrice += cateringAddonPrice;
         }
-
-        // Calculate total
-        int totalPrice = basePrice + addonsPrice;
 
         // Update UI
         tvBasePrice.setText("Base Package: ₹" + formatPrice(basePrice));

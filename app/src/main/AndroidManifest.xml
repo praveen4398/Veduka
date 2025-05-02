@@ -26,6 +26,10 @@
         <activity android:name=".EventDetailActivity" />
         <activity android:name=".BookingActivity"
             android:exported="false" />
+        <activity android:name=".BookingConfirmedActivity"/>
+        <activity android:name=".YourBookingsActivity" />
+        <activity android:name=".BookingDetailsActivity" />
+
         <!-- Google Sign-In Activity -->
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:excludeFromRecents="true"

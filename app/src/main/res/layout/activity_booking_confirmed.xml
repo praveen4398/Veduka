@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Main content centered vertically -->
+    <LinearLayout
+        android:id="@+id/confirmation_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:padding="24dp">
+
+        <!-- Green checkmark icon -->
+        <ImageView
+            android:id="@+id/image_check"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/green_tick"
+        android:contentDescription="Success"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+        <!-- Booking Confirmed Title -->
+        <TextView
+            android:id="@+id/text_booking_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Confirmed"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Info message -->
+        <TextView
+            android:id="@+id/text_booking_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All the necessary details, including the schedule, venue, and additional instructions, have been sent to your registered email."
+            android:textSize="15sp"
+            android:textColor="#222222"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/text_booking_subinfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stay tuned and check your inbox for updates."
+            android:textSize="15sp"
+            android:textColor="#222222"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+    </LinearLayout>
+
+    <!-- View Booking Button fixed at bottom -->
+    <Button
+        android:id="@+id/btn_view_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Booking"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/purple_rounded_button"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:elevation="4dp" />
+
+</RelativeLayout>

@@ -3,39 +3,53 @@ package com.example.vedukamad;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class YourBookingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "YourBookingsActivity"; // For logging
     private RecyclerView recyclerView;
-    private EventAdapter eventAdapter;
+    private BookingAdapter adapter;
+    private TextView emptyView;
+    private BookingManager bookingManager;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_your_bookings);
 
+        // Initialize views
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerButton = findViewById(R.id.hamburgerButton);
+        recyclerView = findViewById(R.id.booking_recycler_view);
+        emptyView = findViewById(R.id.empty_bookings_view);
+
+        // Log initialization for debugging
+        Log.d(TAG, "Activity created, views initialized");
+
+        // Set up RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Handle the hamburger button click to open/close the drawer
         hamburgerButton.setOnClickListener(v -> {
@@ -46,12 +60,25 @@ public class HomePageActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
             } else {
-                Toast.makeText(HomePageActivity.this, "Drawer layout not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(YourBookingsActivity.this, "Drawer layout not found", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Setup NavigationView and load username/profile image
+        // Setup NavigationView and set listener
         NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Load user profile in navigation header
+        setupNavigationHeader(navigationView);
+
+        // Initialize BookingManager instance
+        bookingManager = BookingManager.getInstance(this);
+
+        // Load the bookings
+        loadBookings();
+    }
+
+    private void setupNavigationHeader(NavigationView navigationView) {
         View headerView = navigationView.getHeaderView(0);
         TextView usernameTextView = headerView.findViewById(R.id.username);
         ImageView profileImageView = headerView.findViewById(R.id.profile_image);
@@ -85,59 +112,52 @@ public class HomePageActivity extends AppCompatActivity {
                     .load(R.drawable.ic_profile)
                     .into(profileImageView);
         }
-
-        // Setup RecyclerView for events
-        recyclerView = findViewById(R.id.eventRecyclerView);
-
-        // Set fixed size to false to allow proper scrolling behavior
-        recyclerView.setHasFixedSize(false);
-
-        // Use GridLayoutManager with 2 columns
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
-
-        // Create events list
-        ArrayList<Event> eventsList = new ArrayList<>();
-        eventsList.add(new Event("Marriage", "android.resource://com.example.vedukamad/drawable/image1"));
-        eventsList.add(new Event("Birthday", "android.resource://com.example.vedukamad/drawable/image2"));
-        eventsList.add(new Event("Exhibition", "android.resource://com.example.vedukamad/drawable/image3"));
-        eventsList.add(new Event("Entertainment", "android.resource://com.example.vedukamad/drawable/image4"));
-        // You can add more events in the future
-
-        eventAdapter = new EventAdapter(this, eventsList);
-        recyclerView.setAdapter(eventAdapter);
-
-
-        // Handle navigation item selection
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_bookings) {
-                // Start the bookings activity
-                Intent intent = new Intent(this, YourBookingsActivity.class);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-
-            if (id == R.id.nav_logout) {
-                showLogoutDialog(); // Show logout confirmation dialog
-                return true;
-            }
-
-            // Handle other navigation items if needed
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
-        });
     }
 
     @Override
-    public void onBackPressed() {
-        // Close drawer if open when back button is pressed
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+    protected void onResume() {
+        super.onResume();
+        // Refresh bookings when returning to this activity
+        loadBookings();
+    }
+
+    private void loadBookings() {
+        List<Booking> bookingList = bookingManager.getBookings();
+
+        // Log for debugging
+        Log.d(TAG, "Loading bookings. Count: " + bookingList.size());
+
+        if (bookingList.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            Log.d(TAG, "No bookings found, showing empty view");
         } else {
-            super.onBackPressed();
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+
+            // Always create a new adapter to ensure fresh data display
+            adapter = new BookingAdapter(bookingList);
+            recyclerView.setAdapter(adapter);
+            Log.d(TAG, "Created new adapter with " + bookingList.size() + " bookings");
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here
+        int id = item.getItemId();
+
+        if (id == R.id.nav_bookings) {
+            // We're already here, just close the drawer
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        else if (id == R.id.nav_logout) {
+            showLogoutDialog();
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private void showLogoutDialog() {
@@ -152,8 +172,8 @@ public class HomePageActivity extends AppCompatActivity {
                     editor.clear();
                     editor.apply();
 
-                    // Go to ItemActivity
-                    Intent intent = new Intent(HomePageActivity.this, IntroActivity.class);
+                    // Go to IntroActivity
+                    Intent intent = new Intent(YourBookingsActivity.this, IntroActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
@@ -163,5 +183,14 @@ public class HomePageActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START); // Close drawer after dismissing dialog
                 })
                 .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
