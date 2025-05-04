@@ -1,5 +1,6 @@
 package com.example.vedukamad;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +35,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     public void onBindViewHolder(@NonNull BookingViewHolder holder, int position) {
         Booking booking = bookings.get(position);
 
-        // Set the planner name
         holder.plannerName.setText(booking.getPlannerName());
-
-        // Set location
         holder.plannerLocation.setText("Location: " + booking.getPlannerLocation());
 
-        // Set rating if available
         if (booking.getPlannerRating() > 0) {
             holder.plannerRating.setVisibility(View.VISIBLE);
             holder.plannerRating.setText("★ " + booking.getPlannerRating() + "/5");
@@ -48,17 +45,15 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             holder.plannerRating.setVisibility(View.GONE);
         }
 
-        // Set image
         if (booking.getPlannerImage() != 0) {
             Glide.with(holder.itemView.getContext())
                     .load(booking.getPlannerImage())
                     .placeholder(R.drawable.ic_profile)
                     .into(holder.plannerImage);
         } else {
-            holder.plannerImage.setImageResource(R.drawable.ic_profile); // Default image
+            holder.plannerImage.setImageResource(R.drawable.ic_profile);
         }
 
-        // Set status button
         if (booking.isCompleted()) {
             holder.statusButton.setText("Completed");
             holder.statusButton.setBackgroundTintList(
@@ -69,22 +64,16 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
                     holder.itemView.getContext().getColorStateList(R.color.purple_500));
         }
 
-        // Add click listener to the entire item
         holder.itemView.setOnClickListener(v -> {
-            // You can add intent to open booking details here
-            // For now, just log a click
-            android.util.Log.d("BookingAdapter", "Clicked on booking: " + booking.getPlannerName());
+            Intent intent = new Intent(holder.itemView.getContext(), BookingDetailsActivity.class);
+            intent.putExtra("booking", booking);
+            holder.itemView.getContext().startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
         return bookings.size();
-    }
-
-    public void updateBookings(List<Booking> newBookings) {
-        this.bookings = newBookings;
-        notifyDataSetChanged();
     }
 
     static class BookingViewHolder extends RecyclerView.ViewHolder {

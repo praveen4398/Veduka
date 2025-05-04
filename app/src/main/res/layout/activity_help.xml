@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/help_support"
+            android:textColor="#512E7B"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:text="@string/Welcomehelp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/frequently_asked_questions_faqs"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/how_do_i_book_an_event_on_veduka_nsimply_sign_up_browse_services_select_vendors_and_confirm_your_booking_through_our_secure_payment_system"
+            android:layout_marginBottom="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/can_i_modify_or_cancel_my_booking_nyes_you_can_modify_or_cancel_a_booking_based_on_the_vendor_s_cancellation_policy_check_the_terms_before_confirming"
+            android:layout_marginBottom="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/is_my_payment_secure_nabsolutely_we_use_encrypted_transactions_to_ensure_the_highest_level_of_security"
+            android:layout_marginBottom="12dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/how_do_i_contact_customer_support_nour_team_is_available_via_email_phone_or_live_chat"
+            android:layout_marginBottom="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/contact_us"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_marginBottom="4dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/email_support_support_veduka_com"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/call_us_91_6305740017"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/live_chat_available_on_our_website_app_9_am_9_pm_ist"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/nvendor_partner_support"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/are_you_a_vendor_looking_to_partner_with_us_reach_out_at_vendors_veduka_com"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/ntechnical_assistance"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/facing_issues_with_the_app_or_website_email_us_at_techsupport_veduka_com"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/nfeedback_suggestions"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/we_value_your_feedback_share_your_experience_with_us_at_feedback_veduka_com"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+    </LinearLayout>
+</ScrollView>

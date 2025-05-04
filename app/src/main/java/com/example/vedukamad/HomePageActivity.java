@@ -1,33 +1,53 @@
 package com.example.vedukamad;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class HomePageActivity extends AppCompatActivity {
+
+    static final int REQUEST_MAP = 1;
 
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private DrawerLayout drawerLayout;
     private ImageView hamburgerButton;
+    private TextView locationTextView;
+    private FusedLocationProviderClient fusedLocationClient;
+    private EditText searchEvents;
+
+    private List<Event> allEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,44 +56,39 @@ public class HomePageActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawerLayout);
         hamburgerButton = findViewById(R.id.hamburgerButton);
+        locationTextView = findViewById(R.id.location);
+        searchEvents = findViewById(R.id.searchEvents);
 
-        // Handle the hamburger button click to open/close the drawer
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
         hamburgerButton.setOnClickListener(v -> {
-            if (drawerLayout != null) {
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                } else {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
+            if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.openDrawer(GravityCompat.START);
             } else {
-                Toast.makeText(HomePageActivity.this, "Drawer layout not found", Toast.LENGTH_SHORT).show();
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
 
-        // Setup NavigationView and load username/profile image
         NavigationView navigationView = findViewById(R.id.navigationView);
         View headerView = navigationView.getHeaderView(0);
         TextView usernameTextView = headerView.findViewById(R.id.username);
         ImageView profileImageView = headerView.findViewById(R.id.profile_image);
 
-        // Load username from SharedPreferences or Firebase
         SharedPreferences prefs = getSharedPreferences("VedukaPrefs", MODE_PRIVATE);
         String storedUsername = prefs.getString("username", "");
-
         if (storedUsername == null || storedUsername.isEmpty()) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 storedUsername = user.getDisplayName();
                 if (storedUsername == null || storedUsername.isEmpty()) {
-                    storedUsername = user.getEmail(); // Fallback to email if display name is null
+                    storedUsername = user.getEmail();
                 }
             }
         }
+        usernameTextView.setText(
+                storedUsername != null && !storedUsername.isEmpty() ? storedUsername : "Guest"
+        );
 
-        // Set the username text
-        usernameTextView.setText((storedUsername != null && !storedUsername.isEmpty()) ? storedUsername : "Guest");
-
-        // Load profile image using Glide
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null && user.getPhotoUrl() != null) {
             Glide.with(this)
@@ -86,58 +101,108 @@ public class HomePageActivity extends AppCompatActivity {
                     .into(profileImageView);
         }
 
-        // Setup RecyclerView for events
         recyclerView = findViewById(R.id.eventRecyclerView);
-
-        // Set fixed size to false to allow proper scrolling behavior
         recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // Use GridLayoutManager with 2 columns
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        allEvents.add(new Event("Marriage", "android.resource://com.example.vedukamad/drawable/image1"));
+        allEvents.add(new Event("Birthday", "android.resource://com.example.vedukamad/drawable/image2"));
+        allEvents.add(new Event("Exhibition", "android.resource://com.example.vedukamad/drawable/image3"));
+        allEvents.add(new Event("Entertainment", "android.resource://com.example.vedukamad/drawable/image4"));
 
-        // Create events list
-        ArrayList<Event> eventsList = new ArrayList<>();
-        eventsList.add(new Event("Marriage", "android.resource://com.example.vedukamad/drawable/image1"));
-        eventsList.add(new Event("Birthday", "android.resource://com.example.vedukamad/drawable/image2"));
-        eventsList.add(new Event("Exhibition", "android.resource://com.example.vedukamad/drawable/image3"));
-        eventsList.add(new Event("Entertainment", "android.resource://com.example.vedukamad/drawable/image4"));
-        // You can add more events in the future
-
-        eventAdapter = new EventAdapter(this, eventsList);
+        eventAdapter = new EventAdapter(this, new ArrayList<>(allEvents));
         recyclerView.setAdapter(eventAdapter);
 
+        getCurrentLocation();
 
-        // Handle navigation item selection
+        locationTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivityForResult(intent, REQUEST_MAP);
+        });
+
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_bookings) {
-                // Start the bookings activity
-                Intent intent = new Intent(this, YourBookingsActivity.class);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-
-            if (id == R.id.nav_logout) {
-                showLogoutDialog(); // Show logout confirmation dialog
-                return true;
-            }
-
-            // Handle other navigation items if needed
+            if (id == R.id.nav_bookings)
+                startActivity(new Intent(this, YourBookingsActivity.class));
+            else if (id == R.id.nav_settings)
+                startActivity(new Intent(this, SettingsActivity.class));
+            else if (id == R.id.nav_feedback)
+                startActivity(new Intent(this, VFeedbackActivity.class));
+            else if (id == R.id.nav_about)
+                startActivity(new Intent(this, AboutActivity.class));
+            else if (id == R.id.nav_logout)
+                showLogoutDialog();
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
+
+        searchEvents.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                eventAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    private void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_MAP
+            );
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        String city = getCityNameFromCoordinates(location.getLatitude(), location.getLongitude());
+                        locationTextView.setText(city != null ? city : "Location unavailable");
+                    } else {
+                        locationTextView.setText("Location unavailable");
+                    }
+                });
     }
 
     @Override
-    public void onBackPressed() {
-        // Close drawer if open when back button is pressed
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_MAP && resultCode == RESULT_OK && data != null) {
+            double lat = data.getDoubleExtra("latitude", 0.0);
+            double lng = data.getDoubleExtra("longitude", 0.0);
+            String city = getCityNameFromCoordinates(lat, lng);
+            if (city != null && !city.isEmpty()) {
+                locationTextView.setText(city);
+            } else {
+                Toast.makeText(this, "City not found for selected location", Toast.LENGTH_SHORT).show();
+                locationTextView.setText("Location not found");
+            }
         }
+    }
+
+    private String getCityNameFromCoordinates(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+            if (list != null && !list.isEmpty()) {
+                Address addr = list.get(0);
+                String city = addr.getLocality();
+                if (city == null) city = addr.getAdminArea();
+                return city;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void showLogoutDialog() {
@@ -145,23 +210,27 @@ public class HomePageActivity extends AppCompatActivity {
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    FirebaseAuth.getInstance().signOut(); // Logout Firebase user
-
-                    // Clear SharedPreferences if needed
+                    FirebaseAuth.getInstance().signOut();
                     SharedPreferences.Editor editor = getSharedPreferences("VedukaPrefs", MODE_PRIVATE).edit();
-                    editor.clear();
-                    editor.apply();
-
-                    // Go to ItemActivity
-                    Intent intent = new Intent(HomePageActivity.this, IntroActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    editor.clear().apply();
+                    Intent i = new Intent(HomePageActivity.this, IntroActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
                     finish();
                 })
-                .setNegativeButton("No", (dialog, which) -> {
-                    dialog.dismiss(); // Simply close the dialog and stay on the same screen
-                    drawerLayout.closeDrawer(GravityCompat.START); // Close drawer after dismissing dialog
+                .setNegativeButton("No", (d, w) -> {
+                    d.dismiss();
+                    drawerLayout.closeDrawer(GravityCompat.START);
                 })
                 .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

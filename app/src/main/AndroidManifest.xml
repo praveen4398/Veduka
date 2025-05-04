@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="SelectedPhotoAccess">
 
     <!-- Required Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +20,11 @@
         android:label="Veduka"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
+
+        <!-- Add API Key inside application tag -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAdoLY3S0yROcucRmhxOh7DCYo25JT-fJw"/>
 
         <activity android:name=".MainActivity" />
         <activity android:name=".IntroActivity" />
@@ -29,6 +40,20 @@
         <activity android:name=".BookingConfirmedActivity"/>
         <activity android:name=".YourBookingsActivity" />
         <activity android:name=".BookingDetailsActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".PrivacyActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".VFeedbackActivity" />
+        <activity android:name=".MapsActivity" />
+        <activity android:name=".CurrentBookingsActivity" />
+        <activity android:name=".OrganizerApprovalsPendingActivity" />
+
 
         <!-- Google Sign-In Activity -->
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
@@ -44,9 +69,5 @@
         </activity>
 
     </application>
-
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyAdoLY3S0yROcucRmhxOh7DCYo25JT-fJw"/>
 
 </manifest>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/privacy_amp_security"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#512E7B"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:text="@string/at_veduka_we_prioritize_your_privacy_and_security_our_commitment_is_to_safeguard_your_personal_information"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/information_we_collect"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/personal_information_name_contact_details_and_payment_information"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/event_preferences_venue_choices_vendor_selections_and_service_requirements"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/usage_data_browsing_activity_on_our_platform"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/nhow_we_use_your_information"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/process_bookings_and_provide_event_services_n_improve_our_platform_n_communicate_changes_or_promotions_n_prevent_fraud_and_ensure_safety"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/ndata_protection_amp_security"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/encryption_all_transactions_are_encrypted_n_limited_access_only_authorized_personnel_n_regular_audits_security_checks_against_data_breaches"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:text="@string/contact_us"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+
+        <TextView android:text="@string/email_support_support_veduka_com"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/call_us_91_6305740017"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textColor="#000000"/>
+        <TextView android:text="@string/your_trust_is_our_priority_thank_you_for_choosing_veduka"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
+    </LinearLayout>
+</ScrollView>

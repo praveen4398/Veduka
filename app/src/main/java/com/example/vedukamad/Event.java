@@ -4,13 +4,11 @@ public class Event {
     private String name;
     private String imageUrl;
 
-    // Constructor
     public Event(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
     }
 
-    // Getters and Setters
     public String getName() {
         return name;
     }

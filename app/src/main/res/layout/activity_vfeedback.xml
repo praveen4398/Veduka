@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".VFeedbackActivity">
 
-    <!-- Main content (Main UI of your app) -->
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Main Content -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#512E7B">
+        android:background="@android:color/white">
 
         <!-- Purple Header Section -->
         <LinearLayout
+            android:id="@+id/headerSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#512E7B"
             android:padding="16dp">
-            <!-- Toolbar with Hamburger and Location -->
+
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/mainToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="#512E7B"
@@ -33,7 +35,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="26dp">
 
-                    <!-- Hamburger Button to open drawer -->
                     <ImageView
                         android:id="@+id/hamburgerButton"
                         android:layout_width="40dp"
@@ -45,7 +46,6 @@
                         android:contentDescription="Menu"
                         app:tint="#FFFFFF" />
 
-                    <!-- Location Text and Icon -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,79 +74,74 @@
             </androidx.appcompat.widget.Toolbar>
         </LinearLayout>
 
+        <!-- Feedback Form -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/headerSection"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Search Bar -->
-            <LinearLayout
+            <EditText
+                android:id="@+id/feedbackEditText"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/feedback_edit_text_background"
+                android:gravity="top"
+                android:hint="Submit your feedback.."
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:textColorHint="#000" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/rounded_search_box"
-                android:backgroundTint="#FFFFFF"
-                android:elevation="2dp"
-                android:orientation="horizontal"
-                android:padding="8dp"> <!-- Adjusting this margin to move it a bit up -->
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Rate Us"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_search" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:stepSize="1" />
 
-                <EditText
-                    android:id="@+id/searchPlanners"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="Search “Planners..”"
-                    android:paddingStart="8dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#000000"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-
-        <!-- Event Title -->
-        <TextView
-            android:id="@+id/eventTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="MARRIAGE"
-            android:textSize="26sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:textColor="#000"
-            android:background="@drawable/white_rounded_top" />
-
-        <!-- ScrollView to enable scrolling when content exceeds screen size -->
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true"
-            android:background="@android:color/white">
-
-            <!-- RecyclerView to display list of event planners -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/plannerRecyclerView"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:clipToPadding="false" />
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="THANK YOUU.."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000" />
 
-    <!-- Navigation Drawer (Menu) -->
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginHorizontal="64dp"
+                android:background="@drawable/purple_rounded_button"
+                android:text="SUBMIT"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#512E7B"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_items"
-        app:itemTextAppearance="@style/NavDrawerItemText"
-        app:itemIconSize="30dp" />
+        app:menu="@menu/menu_items"/>
 </androidx.drawerlayout.widget.DrawerLayout>

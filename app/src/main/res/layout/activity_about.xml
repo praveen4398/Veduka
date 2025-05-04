@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/about_veduka"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#512E7B"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:text="@string/welcome_to_veduka_your_premier_event_management_booking_platform"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+        <TextView
+            android:text="@string/at_veduka_we_turn_your_dream_events_into_reality_with_seamless_planning_and_flawless_execution_whether_it_s_a_wedding_corporate_gathering_birthday_celebration_or_a_grand_social_event_we_provide_end_to_end_solutions_to_ensure_an_elegant_and_hassle_free_experience"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+        <TextView
+            android:text="@string/our_mission"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+        <TextView
+            android:text="@string/to_revolutionize_event_planning_with_innovation_elegance_and_efficiency_making_every_celebration_grand_yet_stress_free"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+        <TextView
+            android:text="@string/our_vision"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+        <TextView
+            android:text="@string/to_be_the_go_to_platform_for_event_management_offering_a_one_stop_solution_for_all_your_event_needs_with_transparency_and_professionalism"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"/>
+
+    </LinearLayout>
+</ScrollView>
