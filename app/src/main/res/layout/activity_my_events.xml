@@ -14,7 +14,8 @@
         android:textStyle="bold"
         android:gravity="center"
         android:padding="16dp"
-        android:textColor="#512E7B" />
+        android:textColor="#512E7B"
+        android:layout_marginTop="30dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/my_events_recycler"

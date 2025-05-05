@@ -74,6 +74,15 @@
                     android:layout_marginTop="4dp"/>
 
                 <TextView
+                    android:id="@+id/booking_planner_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+91-xxxxxxxxxx"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+
+                <TextView
                     android:id="@+id/booking_planner_rating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -54,6 +54,9 @@
         <activity android:name=".CurrentBookingsActivity" />
         <activity android:name=".OrganizerApprovalsPendingActivity" />
         <activity android:name=".MyEventsActivity" />
+        <activity android:name=".EditBookingActivity" />
+        <activity android:name=".EditCancelBookingActivity" />
+
 
         <!-- Google Sign-In Activity -->
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"

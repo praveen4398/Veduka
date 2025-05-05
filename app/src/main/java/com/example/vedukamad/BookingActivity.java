@@ -40,6 +40,7 @@ public class BookingActivity extends AppCompatActivity {
     private String plannerName, plannerLocation;
     private float plannerRating;
     private int plannerImage;
+    private String plannerNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class BookingActivity extends AppCompatActivity {
         // Get planner data
         plannerName = getIntent().getStringExtra("planner_name");
         plannerLocation = getIntent().getStringExtra("planner_location");
+        plannerNumber=getIntent().getStringExtra("planner_number");
         plannerRating = getIntent().getFloatExtra("planner_rating", 0.0f);
         plannerImage = getIntent().getIntExtra("planner_image", R.drawable.ic_launcher_background);
 

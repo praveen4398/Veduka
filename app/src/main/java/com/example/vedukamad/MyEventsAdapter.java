@@ -1,5 +1,6 @@
 package com.example.vedukamad;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,10 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
         holder.title.setText(event.getPackageType() + " - " + event.getFormattedDate());
         holder.subtitle.setText(String.format(Locale.getDefault(),
                 "Time: %s | Price: ₹%,d", event.getEventTime(), event.getTotalPrice()));
+
+        // Set text color to black
+        holder.title.setTextColor(Color.BLACK);
+        holder.subtitle.setTextColor(Color.BLACK);
     }
 
     @Override
@@ -40,6 +45,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
 
     static class EventViewHolder extends RecyclerView.ViewHolder {
         TextView title, subtitle;
+
         EventViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(android.R.id.text1);
