@@ -1,0 +1,70 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_bookings"
+            android:icon="@drawable/ic_calender"
+            android:title="My Events" />
+    </group>
+
+    <!-- Divider -->
+    <item
+        android:id="@+id/divider1"
+        android:icon="@drawable/divider"
+        android:enabled="false"
+        android:checkable="false"
+        android:title="" />
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+    </group>
+
+    <!-- Divider -->
+    <item
+        android:id="@+id/divider2"
+        android:icon="@drawable/divider"
+        android:title=""
+        android:enabled="false"
+        android:checkable="false" />
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_feedback"
+            android:title="Send Feedback" />
+    </group>
+
+    <!-- Divider -->
+    <item
+        android:id="@+id/divider3"
+        android:icon="@drawable/divider"
+        android:title=""
+        android:enabled="false"
+        android:checkable="false" />
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Log Out" />
+    </group>
+
+    <!-- Divider -->
+    <item
+        android:id="@+id/divider4"
+        android:icon="@drawable/divider"
+        android:title=""
+        android:enabled="false"
+        android:checkable="false" />
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info"
+            android:title="About" />
+    </group>
+
+</menu>

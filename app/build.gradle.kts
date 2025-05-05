@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.firestore)
     annotationProcessor(libs.compiler)
     implementation(libs.picasso)
     implementation(libs.play.services.maps)

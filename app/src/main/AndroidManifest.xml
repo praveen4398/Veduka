@@ -53,7 +53,7 @@
         <activity android:name=".MapsActivity" />
         <activity android:name=".CurrentBookingsActivity" />
         <activity android:name=".OrganizerApprovalsPendingActivity" />
-
+        <activity android:name=".MyEventsActivity" />
 
         <!-- Google Sign-In Activity -->
         <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"

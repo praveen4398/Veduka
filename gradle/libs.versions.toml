@@ -22,6 +22,7 @@ picasso = "2.71828"
 places = "4.2.0"
 playServicesAuth = "21.3.0"
 playServicesMaps = "19.2.0"
+firebaseFirestore = "25.1.4"
 
 [libraries]
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
@@ -47,6 +48,7 @@ places = { module = "com.google.android.libraries.places:places", version.ref = 
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesAuth" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

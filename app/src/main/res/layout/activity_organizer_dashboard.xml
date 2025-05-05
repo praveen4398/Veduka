@@ -352,68 +352,55 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:weightSum="2">
 
-                        <!-- Approval Pending Section - Made clickable -->
                         <LinearLayout
                             android:id="@+id/approval_pending_section"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="12dp">
+                            android:background="?selectableItemBackground"
+                            android:clickable="true" 
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:text="@string/approval_pending_label"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                                 android:layout_height="wrap_content"
-                                android:text="Approval Pending"
-                                android:textSize="16sp"
-                                android:textColor="#444" />
+                                android:layout_width="wrap_content"
+                                android:textColor="#000"/>
 
                             <TextView
                                 android:id="@+id/approval_pending_count"
-                                android:layout_width="wrap_content"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                                 android:layout_height="wrap_content"
-                                android:text="2"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                android:textColor="#000" />
+                                android:layout_width="wrap_content"
+                                android:textColor="#000"
+                                android:layout_marginLeft="80dp"/>
                         </LinearLayout>
 
-                        <!-- Current Bookings Section - Made clickable -->
                         <LinearLayout
                             android:id="@+id/current_bookings_section"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:background="?attr/selectableItemBackground"
+                            android:background="?selectableItemBackground"
                             android:clickable="true"
-                            android:focusable="true"
-                            android:padding="12dp">
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:text="@string/current_bookings_label"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                                 android:layout_height="wrap_content"
-                                android:text="Current Bookings"
-                                android:textSize="16sp"
-                                android:textColor="#444" />
+                                android:layout_width="wrap_content"
+                                android:textColor="#000" />
 
                             <TextView
                                 android:id="@+id/current_bookings_count"
-                                android:layout_width="wrap_content"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                                 android:layout_height="wrap_content"
-                                android:text="8"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                android:textColor="#000" />
+                                android:layout_width="wrap_content"
+                                android:textColor="#000"
+                                android:layout_marginLeft="90dp"/>
                         </LinearLayout>
+
                     </LinearLayout>
 
                     <!-- Divider -->
@@ -513,6 +500,6 @@
         android:layout_gravity="start"
         android:background="#512E7B"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_items" />
+        app:menu="@menu/menu_items2" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

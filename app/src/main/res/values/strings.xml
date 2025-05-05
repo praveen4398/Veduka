@@ -59,4 +59,9 @@
     <string name="to_be_the_go_to_platform_for_event_management_offering_a_one_stop_solution_for_all_your_event_needs_with_transparency_and_professionalism">To be the go-to platform for event management, offering a one-stop solution for all your event needs with transparency and professionalism.</string>
     <string name="events_calendar">EVENTS CALENDAR</string>
     <string name="upcoming_events">UPCOMING EVENTS</string>
+    <string name="approval_pending_label">Pending Approvals</string>
+    <string name="current_bookings_label">Current Bookings</string>
+    <string name="default_location">Tanuku, India</string>
+    <string name="business_name">Vivah Planners</string>
+
 </resources>
